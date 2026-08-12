@@ -1,78 +1,51 @@
-# PvP and Session Multiplayer Launch Checklist
+# Small Online Game Checklist
 
-Use this for matches, rooms, races, rounds, co-op missions, arena games, and other bounded sessions.
+Use this for a match, race, fighting game, sports game, arena game, or small co-op game.
 
-## Architecture
+You do not need every feature. Check only what your game uses.
 
-- [ ] The game is explicitly classified as session-based, with durable and disposable state listed.
-- [ ] Direct P2P, listen host, deterministic lockstep or rollback, or dedicated server is chosen from explicit trust, fairness, scale, cost, and failure requirements.
-- [ ] The dedicated server or listen host owns validated simulation outcomes, or deterministic peers exchange validated inputs with desync detection.
-- [ ] Untrusted peers never directly set durable currency, items, progression, or ranked rewards.
-- [ ] MMO-only systems have been excluded unless a documented requirement justifies them.
+## Start small
 
-## Peer-to-peer and listen-host sessions
+- [ ] Two players can join the same game.
+- [ ] Both players see the same important events.
+- [ ] The match can start and end.
+- [ ] The winner or final result is correct.
 
-- [ ] The game documents host advantage, malicious-host power, hidden-information exposure, peer cheating, and acceptable result trust.
-- [ ] Signaling is authenticated and separate from gameplay transport.
-- [ ] Internet connectivity covers NAT discovery, hole punching, IPv4 and IPv6 as required, carrier-grade NAT, and relay fallback.
-- [ ] Relay capacity, region, latency, privacy, and cost are measured.
-- [ ] Session credentials authenticate peers and gameplay traffic is encrypted and replay-protected.
-- [ ] Host selection considers latency, reachability, hardware, party ownership, and trust.
-- [ ] Host departure has tested migration or an explicit player-safe termination policy.
-- [ ] Lockstep or rollback games test determinism, state hashing, desync, rollback windows, resynchronization, and replay debugging.
-- [ ] Same-LAN, different-NAT, symmetric-NAT, relay-only, mobile network change, suspend/resume, and host-drop scenarios are tested.
-- [ ] High-value ranked or economy outcomes do not trust a player host without a reviewed verification design.
+## Choose how players connect
 
-## Connection and session lifecycle
+- [ ] We decided whether one player runs the match or a separate computer runs it.
+- [ ] If a player hosts, the game explains what happens when that player leaves.
+- [ ] If a direct connection fails, we have a backup connection service or a clear error message.
+- [ ] Players can connect without changing internet settings by hand.
 
-- [ ] Connect, authenticate, authorize, reserve, join, ready, play, disconnect, reconnect, leave, and expire are explicit states.
-- [ ] Join credentials are short-lived, audience-bound, replay-protected, and safe to revoke.
-- [ ] Reconnect has a defined grace period and cannot duplicate participation, state, results, or rewards.
-- [ ] Full, stale, draining, restarting, version-incompatible, private, kicked, and banned server responses are player-readable.
-- [ ] Server heartbeats, health, capacity, and stale-record cleanup are implemented.
+## Handle bad internet
 
-## Parties, lobbies, and matchmaking
+- [ ] The game still works with normal delay.
+- [ ] Other players do not jump around badly.
+- [ ] A player can reconnect after a short disconnect.
+- [ ] The game clearly explains when a connection is lost.
 
-- [ ] Party leadership, invitations, ready state, queue ownership, cancellation, and disconnect behavior are defined.
-- [ ] Lobby privacy, passwords, capacity, reservations, and join-in-progress rules are enforced on the server.
-- [ ] Matchmaking has an actual worker or service that claims tickets and forms matches.
-- [ ] Party integrity, region, latency, skill, platform, input, mode, role, and build-version policies are tested.
-- [ ] Server allocation reserves healthy capacity atomically and recovers from failed allocation.
-- [ ] Queue timeout, widening, cancel, retry, backfill, and player messaging are defined.
+## Keep the game fair
 
-## Networking and fairness
+- [ ] Players cannot tell the game how much damage they caused.
+- [ ] Players cannot give themselves a win, score, coins, or items.
+- [ ] Important rewards are only given once.
+- [ ] High-value ranked games do not trust a player host without a clear safety plan.
 
-- [ ] Tick rate and snapshot rate are measured under representative load.
-- [ ] Prediction, reconciliation, interpolation, extrapolation limits, and hard-correction thresholds are documented.
-- [ ] Sequence numbers, timestamps, ordering, duplication, loss, jitter, and reconnect resynchronization are tested.
-- [ ] Lag compensation or rewind has a bounded policy and timestamp-abuse protection where needed.
-- [ ] Bandwidth per player and per server is measured.
-- [ ] Debug tools expose ping, jitter, loss, input acknowledgement, correction count, and interpolation buffer.
+## Help players join
 
-## Match integrity
+- [ ] Invites, rooms, or the Play button work.
+- [ ] Full and private games cannot be joined by mistake.
+- [ ] Waiting players can cancel.
+- [ ] Friends stay together when joining as a group, if the game supports groups.
 
-- [ ] Match lifecycle is an explicit state machine.
-- [ ] A trusted server finalizes valuable results, or the accepted peer-result verification and dispute model is documented and tested.
-- [ ] Result submission and rewards are idempotent.
-- [ ] Duplicate, late, reordered, conflicting, and retried result submissions are tested.
-- [ ] Crash, abandonment, invalid match, maintenance, and disputed-result policies are documented.
-- [ ] Ranked and reward changes have audit records and operator remediation.
+## Before release
 
-## Security and player safety
+- [ ] We tested several players joining at the same time.
+- [ ] We tested a player leaving during the match.
+- [ ] We tested the player running the match, or the separate game computer, crashing.
+- [ ] We tested slow internet and lost messages.
+- [ ] Saved progress has a backup.
+- [ ] Errors shown to players use simple language.
 
-- [ ] Every client message has authentication, authorization, schema, size, frequency, and semantic validation.
-- [ ] Rate limits and abuse tests cover gameplay, queue, lobby, chat, and account paths.
-- [ ] Cheat threats and telemetry are documented.
-- [ ] Chat, voice, reports, blocks, mutes, bans, appeals, and evidence retention are implemented as required.
-- [ ] Secrets, operator access, service identity, and dependency security have been reviewed.
-
-## Production operations
-
-- [ ] Dashboards cover login, queue time, match quality, allocation, join success, active sessions, tick time, bandwidth, disconnects, reconnects, and result finalization.
-- [ ] Alerts have an owner, threshold, runbook, and player impact description.
-- [ ] Load tests include launch bursts, queue bursts, full regions, stale servers, reconnect storms, and rolling deployments.
-- [ ] Servers can drain without accepting new matches.
-- [ ] Deployment, migration, canary, rollback, maintenance, and incident procedures are rehearsed.
-- [ ] Durable progression has backups, restore tests, and a reconciliation process.
-
-Return to the [interactive Glitch multiplayer prompt guide](https://www.glitch.fun/publishers/tools/multiplayer-game-development-prompts).
+[Return to the simple Glitch prompt guide](https://www.glitch.fun/publishers/tools/multiplayer-game-development-prompts).

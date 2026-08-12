@@ -1,126 +1,116 @@
-# MMO and Multiplayer Game AI Prompts
+# Make Your Game Work Online
 
-This repository is a provider-neutral guide for planning, building, auditing, and improving multiplayer games with an AI coding agent. It separates bounded PvP or co-op sessions from persistent MMO worlds so a team can build the smallest architecture its game actually needs.
+New to multiplayer? This guide is for you.
 
-Use the interactive prompt picker and comparison guide on Glitch:
+You do not need to understand servers or networking before you start. Pick the option that sounds like your game, copy one prompt, and give it to your AI coding tool.
 
-- [Multiplayer and MMO Game Development Prompts](https://www.glitch.fun/publishers/tools/multiplayer-game-development-prompts)
-- [General AI Game Development Prompts](https://www.glitch.fun/publishers/tools/ai-game-development-prompts)
+[Open the simple prompt picker on Glitch](https://www.glitch.fun/publishers/tools/multiplayer-game-development-prompts)
 
-The prompts do not require Glitch. They work with an existing engine, backend, cloud, database, transport, and identity provider. Glitch multiplayer and hosting options are documented as one possible integration path, with explicit boundaries for systems the game still needs to own.
+## Start with three questions
 
-## Start with the correct path
+1. Does the game end after each match?
+2. Should the player's character, items, or money still exist tomorrow?
+3. How many players are together at one time?
 
-### Choose PvP or session multiplayer when
+## Pick your game type
 
-- Matches, races, rounds, rooms, or co-op missions have a beginning and end.
-- Most authoritative world state can disappear when the session ends.
-- Durable data is limited to accounts, progression, ranks, unlocks, cosmetics, or match history.
-- A lobby, party, invite, server browser, queue, peer-hosted session, or dedicated match server covers the core experience.
+### Small online game
 
-This path still needs serious networking and security. It usually does not need realms, shards, persistent zones, distributed inventory services, guild services, housing, or a persistent world economy.
+Choose this for:
 
-Start here:
+- One-versus-one games
+- Small co-op games
+- Racing, fighting, sports, or arena matches
+- Private games with friends
 
-1. [Choose the right architecture](prompts/00-choose-the-right-multiplayer-architecture.md)
-2. [Build the shared authoritative foundation](prompts/01-shared-authoritative-foundation.md)
-3. If no separate gameplay server is justified, [build peer-to-peer or listen-server multiplayer](prompts/02a-peer-to-peer-and-listen-server.md).
-4. [Build PvP and session multiplayer](prompts/02-pvp-session-multiplayer.md)
-5. [Use the PvP launch checklist](checklists/pvp-launch-checklist.md)
+Start with [Choose the simplest online setup](prompts/00-choose-the-right-multiplayer-architecture.md).
 
-### PvP does not always require a dedicated server
+If you want players to connect without renting a separate computer to run the match, use [Connect players directly](prompts/02a-peer-to-peer-and-listen-server.md).
 
-A two-player or small-group game can connect players directly. Common models are:
+### Large online match
 
-- Direct peer-to-peer mesh, normally only for very small groups.
-- A listen server, where one player is the authoritative host and also plays.
-- Deterministic lockstep, where peers exchange ordered inputs and simulate the same state.
-- Rollback networking, where peers predict remote inputs and re-simulate when the real input arrives.
+Choose this when many players are in one match, but the match still ends.
 
-Removing the dedicated gameplay server does not remove every online service. Internet P2P usually still needs an authenticated lobby or signaling service, NAT discovery, hole punching, relay fallback for difficult networks, session credentials, and optional matchmaking. The game must also define host advantage, malicious-host risk, hidden information, desync detection, host migration or session termination, and how final results are trusted.
+Examples include a battle royale, large battlefield, or large survival round.
 
-Dedicated servers are usually safer when the game has high-value ranked outcomes, valuable rewards, hidden information a host must not see, many players, strict cheat resistance, or no acceptable host-migration behavior.
+Start with [Set up a normal online match](prompts/02-pvp-session-multiplayer.md).
 
-### Choose MMO or persistent-world architecture when
+### Online world or MMO
 
-- Players return to durable characters, inventories, progression, social structures, or world state.
-- The world must be partitioned into realms, shards, zones, layers, or instances.
-- The game needs interest management, variable replication rates, durable ownership boundaries, economy safety, orchestration, and recovery.
-- Failures must preserve valuable state across many game-server and service processes.
+Choose this only when players return later and expect their character, items, money, friends, or world changes to still be there.
 
-Start here:
+Start with [Build one small part of an MMO world](prompts/03-mmo-persistent-world.md).
 
-1. [Choose the right architecture](prompts/00-choose-the-right-multiplayer-architecture.md)
-2. [Build the shared authoritative foundation](prompts/01-shared-authoritative-foundation.md)
-3. [Design the persistent world](prompts/03-mmo-persistent-world.md)
-4. [Protect persistence and the economy](prompts/06-persistence-and-economy-safety.md)
-5. [Use the MMO readiness checklist](checklists/mmo-readiness-checklist.md)
+MMOs are much harder. Begin with one player, one character, one area, and one saved change.
 
-### Large-session games are not automatically MMOs
+## Can players connect without renting a game server?
 
-A battle royale, extraction game, social deduction game, large co-op operation, or 200-player battlefield may need aggressive interest management, variable update rates, stronger server allocation, and larger load tests. It can still remain session-based if the authoritative world ends with the session and durable data is limited.
+Yes, sometimes.
 
-Add the scaling parts that the measured game needs. Do not add persistent-world services only because the player count is high.
+For a small game:
 
-## Prompt library
+- Two players can connect directly.
+- One player can host the match.
+- Fighting and strategy games can sometimes share button presses instead of sending the whole game world.
 
-| Guide | Use it for |
+You may still need a small online helper to introduce the players. Some home and mobile internet connections also need a backup connection service.
+
+Use a separate computer to run the match when:
+
+- Winning or rewards are valuable.
+- A player host could cheat.
+- The host must not see secret information.
+- Many players are in one game.
+- The match must keep running when one player leaves.
+
+## How to use a prompt
+
+1. Open the prompt that matches your problem.
+2. Copy the whole prompt.
+3. Paste it into your AI coding tool.
+4. Let the AI inspect your project before it changes anything.
+
+The prompt may contain technical words. That is okay. The prompt is written for the AI, not for you.
+
+Use one prompt at a time. Test the game before moving to the next prompt.
+
+## Prompt list
+
+| I need help with... | Use this |
 | --- | --- |
-| [00 — Choose the architecture](prompts/00-choose-the-right-multiplayer-architecture.md) | Classify the game before designing infrastructure |
-| [01 — Shared authoritative foundation](prompts/01-shared-authoritative-foundation.md) | Trust boundaries, messages, prediction, reconciliation, interpolation, identity, and reconnect |
-| [02 — PvP and session multiplayer](prompts/02-pvp-session-multiplayer.md) | Parties, lobbies, server browser, queues, match servers, results, and anti-cheat |
-| [02A — Peer-to-peer and listen server](prompts/02a-peer-to-peer-and-listen-server.md) | Direct connections, signaling, NAT traversal, relay fallback, host authority, lockstep, rollback, and migration |
-| [03 — MMO persistent world](prompts/03-mmo-persistent-world.md) | Realms, zones, instances, AOI, world handoff, services, and orchestration |
-| [04 — Network quality and lag](prompts/04-network-quality-and-lag.md) | Latency, jitter, packet loss, lag compensation, rewind, and network simulation |
-| [05 — Matchmaking and allocation](prompts/05-matchmaking-and-server-allocation.md) | Ticket workers, match formation, party rules, region selection, and healthy capacity |
-| [06 — Persistence and economy safety](prompts/06-persistence-and-economy-safety.md) | Characters, inventory, currency, trading, idempotency, duplication, backups, and recovery |
-| [07 — Security, observability, and load](prompts/07-security-observability-and-load-testing.md) | Threat modeling, moderation, telemetry, SLOs, load tests, release safety, and incidents |
-| [08 — Glitch integration options](prompts/08-glitch-integration-options.md) | Optional Glitch session, MMO control-plane, hosting, database, and adapter integration |
+| Choosing the right setup | [Choose the simplest online setup](prompts/00-choose-the-right-multiplayer-architecture.md) |
+| Making the game rules trustworthy | [Choose who controls the match](prompts/01-shared-authoritative-foundation.md) |
+| Connecting players without renting a game server | [Connect players directly](prompts/02a-peer-to-peer-and-listen-server.md) |
+| Making a normal match or co-op game | [Set up an online match](prompts/02-pvp-session-multiplayer.md) |
+| Building an MMO world | [Build a persistent online world](prompts/03-mmo-persistent-world.md) |
+| Fixing lag or shaky movement | [Improve online movement and lag](prompts/04-network-quality-and-lag.md) |
+| Putting waiting players into games | [Set up matchmaking](prompts/05-matchmaking-and-server-allocation.md) |
+| Saving characters, items, and money | [Protect saved progress](prompts/06-persistence-and-economy-safety.md) |
+| Testing cheating, crashes, and many players | [Prepare for real players](prompts/07-security-observability-and-load-testing.md) |
+| Using Glitch | [Connect the game to Glitch](prompts/08-glitch-integration-options.md) |
 
-## How to use the prompts
+## Simple planning sheets
 
-1. Complete the [multiplayer architecture brief](templates/multiplayer-architecture-brief.md).
-2. Give the AI the brief, repository, current documentation, and access to the real tests.
-3. Run one prompt at a time.
-4. Require an audit and plan before implementation.
-5. Review assumptions, especially player count, persistence, transport, tick rate, region, and latency targets.
-6. Commit a working milestone before moving to the next system.
-7. Re-run network, concurrency, load, security, and recovery tests after every architectural change.
+- [Plan a small match](checklists/pvp-launch-checklist.md)
+- [Plan an MMO](checklists/mmo-readiness-checklist.md)
+- [Answer a few questions about your game](templates/multiplayer-architecture-brief.md)
 
-The AI should never be asked to “add multiplayer” as one undifferentiated task. Multiplayer is a chain of trust, simulation, transport, session, persistence, and operations decisions. Breaking that chain into explicit milestones produces safer code and much better evidence.
+## Where Glitch can help
 
-## Shared principles
+Glitch can help with:
 
-- Choose the simulation authority explicitly. A dedicated server or listen host validates client intent; deterministic lockstep or rollback peers exchange inputs and detect desync.
-- PvP can avoid a separate dedicated gameplay server, but Internet P2P still needs a connectivity, security, host-failure, and result-trust plan.
-- Responsive presentation does not require client authority. Use prediction, reconciliation, interpolation, and carefully bounded lag compensation.
-- A matchmaking ticket store is not a complete matcher. A server registry is not a fleet allocator.
-- Realtime negotiation is not the same as an implemented realtime event pipeline.
-- MMO topology records are not the same as authoritative world simulation.
-- Durable rewards and economy changes need idempotency, concurrency control, audit history, reconciliation, backups, and restore tests.
-- Provider-neutral boundaries reduce migration risk and make local testing possible.
-- Every production claim needs measured evidence under latency, loss, load, rolling deployment, and failure.
+- Helping players find and join games
+- Listing available matches or game servers
+- Giving players short-lived join passes
+- Organizing MMO worlds into areas
+- Hosting a web game or supporting service
+- Providing places to save accounts, progress, items, and other data
 
-## Suggested progression
+Your game still needs:
 
-For a new game, prove multiplayer in this order:
+- Its own movement, combat, scores, and win rules
+- Code that decides which players should play together
+- Direct-connection or backup-connection code when a player runs the match
+- Rules for saving characters, items, money, and world changes
 
-1. Two authenticated players can enter one session using the chosen direct-P2P, listen-host, lockstep, rollback, or dedicated-server model.
-2. Inputs, state replication, prediction, reconciliation, interpolation, disconnect, and reconnect work.
-3. One complete PvP or co-op match can form, run, finish, and apply trusted results exactly once.
-4. Matchmaking and server allocation work under concurrency and regional capacity pressure.
-5. Add durable character state only if the design needs it.
-6. Add one persistent realm and zone vertical slice.
-7. Add interest management, instances, service extraction, orchestration, and multi-region recovery from measured need.
-
-This sequence lets an MMO grow from a correct multiplayer foundation without forcing a PvP game to carry MMO complexity.
-
-## Contributing
-
-Keep additions provider-neutral by default. A provider-specific prompt must:
-
-- State the exact capability being integrated.
-- Identify what remains game-owned or requires another provider.
-- Avoid claiming that a database model, queue record, negotiation response, or control-plane API is a complete runtime.
-- Include local-development, contract-test, migration, and failure behavior.
-- Link back to the [Glitch multiplayer prompt guide](https://www.glitch.fun/publishers/tools/multiplayer-game-development-prompts).
+You do not have to use Glitch. The prompts can be used with other providers or your own setup.
