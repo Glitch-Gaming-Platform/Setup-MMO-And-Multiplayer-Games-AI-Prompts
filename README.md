@@ -14,11 +14,18 @@ You do not need to understand servers or networking before you start. Pick the o
 
 ## Pick your game type
 
-### Small online game
+### 1v1 PvP or two-player game
+
+Choose this when exactly two players compete in one match.
+
+This needs much less than a normal multiplayer game. You will usually not need matchmaking, parties, public lobbies, several hosting regions, server fleets, or any MMO systems.
+
+Start with [Add one-on-one PvP](prompts/02-one-on-one-pvp.md).
+
+### Small group game
 
 Choose this for:
 
-- One-versus-one games
 - Small co-op games
 - Racing, fighting, sports, or arena matches
 - Private games with friends
@@ -80,6 +87,7 @@ Use one prompt at a time. Test the game before moving to the next prompt.
 | --- | --- |
 | Choosing the right setup | [Choose the simplest online setup](prompts/00-choose-the-right-multiplayer-architecture.md) |
 | Making the game rules trustworthy | [Choose who controls the match](prompts/01-shared-authoritative-foundation.md) |
+| Adding a match for exactly two players | [Add one-on-one PvP](prompts/02-one-on-one-pvp.md) |
 | Connecting players without renting a game server | [Connect players directly](prompts/02a-peer-to-peer-and-listen-server.md) |
 | Making a normal match or co-op game | [Set up an online match](prompts/02-pvp-session-multiplayer.md) |
 | Building an MMO world | [Build a persistent online world](prompts/03-mmo-persistent-world.md) |
